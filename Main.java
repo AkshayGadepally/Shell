@@ -76,6 +76,6 @@ public class Main {
     }    
         
         scanner.close();
-        PATH.close();
+        
     }
 }
