@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.Arrays;
-import main.java.FileLocation;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ProcessBuilder;
@@ -8,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import main.java.FileLocation;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -23,7 +23,10 @@ public class Main {
         String input = scanner.nextLine();
         String[] split = input.split(" ");
         String place1 = split[0];
-        String initialDir = System.getProperty("user.dir");
+
+        // handle '' input
+        
+        split = Quotation.quote(split);
 
         // Checking the "type" command
 
@@ -56,8 +59,9 @@ public class Main {
 
 
            
-          String place = FileLocation.fileLocation(place1);
+          String place = FileLocation.fileLocation(place1);   
           if(place != null){
+            
             try{
                 ProcessBuilder processbuilder = new ProcessBuilder(split);
                 processbuilder.directory(new File(System.getProperty("user.dir")));
@@ -84,6 +88,16 @@ public class Main {
             }
             String targetPath = split[1];
             try {
+                if(targetPath.equals("~")){
+                    String home = System.getenv("HOME");
+                    if(home != null){
+                        System.setProperty("user.dir",home);
+                    }
+                    else{
+                        System.out.println("cd: " + targetPath + ": No such file or directory");
+                    }
+                    continue;
+                }
                 File directory = new File(targetPath);
                 if(directory.isAbsolute()) {
                     // Handle absolute path
@@ -94,15 +108,17 @@ public class Main {
                         System.out.println("cd: " + targetPath + ": No such file or directory");
                     }
                 } else {
-                    // Handle relative path (keeping existing logic for now)
+                    // Handle relative path 
                     File currentDir = new File(System.getProperty("user.dir"));
                     File newDir = new File(currentDir, targetPath).getCanonicalFile();
                     if(newDir.exists() && newDir.isDirectory()) {
                         System.setProperty("user.dir", newDir.getCanonicalPath());
-                    } else {
+                    } 
+                        else{
                         System.out.println("cd: " + targetPath + ": No such file or directory");
                     }
                 }
+                
             } catch(IOException e) {
                 System.out.println("cd: " + targetPath + ": No such file or directory");
             }
