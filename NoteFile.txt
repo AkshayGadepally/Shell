@@ -4,7 +4,7 @@
 
 // if(Character.inWhiteSpace(c) && !isSingleQuoted && !isDoubleQuoted){
        if(CharacterToken.getLength() >0){
-              Token.get(CharacterToken.getString(input))
+              Token.add(CharacterToken.getString(input))
        }
 }
         
