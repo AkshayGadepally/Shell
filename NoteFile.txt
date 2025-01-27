@@ -1,4 +1,10 @@
 // handle '' input
        
-        List<String> arguments = parseArguments(input);
+        StringBuilder result = Quotation.quote(input);
+
+// if(Character.inWhiteSpace(c) && !isSingleQuoted && !isDoubleQuoted){
+       if(CharacterToken.getLength() >0){
+              Token.get(CharacterToken.getString(input))
+       }
+}
         
