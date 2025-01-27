@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import main.java.FileLocation;
+import main.java.Quotations;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -21,26 +23,24 @@ public class Main {
         while(true){        
         System.out.print("$ ");
         String input = scanner.nextLine();
-        String[] split = input.split(" ");
-        String place1 = split[0];
+        List<String> split = Quotations.quote(input);
+        String place1 = split.get(0);
 
         // handle '' input
         
-        split = Quotation.quote(split);
-
         // Checking the "type" command
 
         String[] command = {"echo","exit","type","pwd","cd"};
         if(input.startsWith("type")){
             boolean check = false;
-            if(split.length != 2){
+            if(split.size() != 2){
                 System.out.println("Syntax: type <command>");
                 continue;
             }
-           String place2 = split[1];
+           String place2 = split.get(1);
            for(String word : command){ 
                if(place2.equals(word)){
-                    System.out.println(split[1] + " is a shell builtin");
+                    System.out.println(split.get(1) + " is a shell builtin");
                     check = true;
                     break;
                     }    
@@ -50,7 +50,7 @@ public class Main {
                     if(location != null){
                         System.out.println(place2 + " is " + location);
                     } else{
-                        System.out.println(split[1] + ": not found");
+                        System.out.println(split.get(1) + ": not found");
                     }
                 }continue;
         }  
@@ -83,10 +83,10 @@ public class Main {
         // Change Directory statement
 
         if(place1.equals("cd")) {
-            if(split.length < 2) {
+            if(split.size() < 2) {
                 continue;
             }
-            String targetPath = split[1];
+            String targetPath = split.get(1);
             try {
                 if(targetPath.equals("~")){
                     String home = System.getenv("HOME");
@@ -141,13 +141,13 @@ public class Main {
         // this statement is for echo command
 
         if(input.startsWith("echo")){ 
-            for(int i = 1; i < split.length ; i++){
-                if(i == split.length - 1){
-                    System.out.print(split[i]);
+            for(int i = 1; i < split.size() ; i++){
+                if(i == split.size() - 1){
+                    System.out.print(split.get(i));
                     System.out.println(); 
                 }
                 else{
-                    System.out.print(split[i] + " ");
+                    System.out.print(split.get(i) + " ");
                 }
             }
             continue;
