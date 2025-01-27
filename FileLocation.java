@@ -2,13 +2,13 @@ package main.java;
 
 import java.io.File;
 
-public class FileLocation{
-    public static String fileLocation(String givencommand){
+public class FileLocation {
+    public static String fileLocation(String givenCommand) {
         String path = System.getenv("PATH");
-        String[] Directories = path.split(":");
-        for(String directory : Directories){
-            File file = new File(directory +File.separator+ givencommand);
-            if(file.exists()&& file.canExecute()){
+        String[] directories = path.split(":");
+        for (String directory : directories) {
+            File file = new File(directory + File.separator + givenCommand);
+            if (file.exists() && file.canExecute()) {
                 return file.getAbsolutePath();
             }
         }
