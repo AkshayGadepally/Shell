@@ -13,20 +13,18 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-      
-
         Scanner scanner = new Scanner(System.in);
-        
-
+    
         // while loop to start the shell with $ sign
 
         while(true){        
         System.out.print("$ ");
         String input = scanner.nextLine();
+
+        // checking for quotes
+
         List<String> split = Quotations.quote(input);
         String place1 = split.get(0);
-
-        // handle '' input
         
         // Checking the "type" command
 
@@ -56,9 +54,7 @@ public class Main {
         }  
 
         // Statement for opening a file with given arguments from the PATH
-
-
-           
+    
           String place = FileLocation.fileLocation(place1);   
           if(place != null){
             
@@ -142,6 +138,10 @@ public class Main {
 
         if(input.startsWith("echo")){ 
             for(int i = 1; i < split.size() ; i++){
+                if(split.get(i)=="\\") {
+                    continue;
+                }
+                else
                 if(i == split.size() - 1){
                     System.out.print(split.get(i));
                     System.out.println(); 
@@ -155,7 +155,7 @@ public class Main {
 
         // this statement is to print for invalid commands
         
-        System.out.println(input + ": command not found");
+                System.out.println(input + ": command not found");
         if(input.equals(null)){
             System.out.println("$ ");
             break;

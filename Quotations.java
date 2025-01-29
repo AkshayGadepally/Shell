@@ -16,11 +16,21 @@ public class Quotations {
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
             if (c == '\'') {
-                isSingleQuoted = !isSingleQuoted;
+                if(!isDoubleQuoted){
+                    isSingleQuoted = !isSingleQuoted;
+                }
+                else{
+                    currentToken.append(c);
+                }
                 continue;
             }
             if (c == '"'){
-                isDoubleQuoted = !isDoubleQuoted;
+                if(!isSingleQuoted){
+                    isDoubleQuoted = !isDoubleQuoted;
+                }
+                else{
+                    currentToken.append(c);
+                }
                 continue;
             }
             for(String word : insideDoubleQuotes){
