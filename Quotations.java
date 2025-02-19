@@ -15,6 +15,14 @@ public class Quotations {
         // Loop for the Single Quotations
         for (int i = 0; i < input.length(); i++) {
             char c = input.charAt(i);
+            if(c == '\\'){
+                i++;
+                if(i < input.length()){
+                    currentToken.append(input.charAt(i));
+                   
+                }
+                continue;
+            }
             if (c == '\'') {
                 if(!isDoubleQuoted){
                     isSingleQuoted = !isSingleQuoted;
